@@ -1,10 +1,13 @@
+import 'package:admin/screens/dashboard/dashboard_screen.dart';
+import 'package:admin/screens/dashboard/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({
-    Key? key,
-  }) : super(key: key);
+
+  final Function setScreen;
+
+  const SideMenu(this.setScreen) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,11 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Dashboard",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            press: () {
+
+              this.setScreen(new DashboardScreen());
+
+            },
           ),
           DrawerListTile(
             title: "Transaction",
@@ -27,7 +34,11 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Task",
             svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
+            press: () {
+
+              this.setScreen(new TasksScreen());
+
+            },
           ),
           DrawerListTile(
             title: "Documents",

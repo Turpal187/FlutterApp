@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-class DashboardScreen extends StatelessWidget {
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -11,7 +11,7 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            
+
 
           ],
         ),
