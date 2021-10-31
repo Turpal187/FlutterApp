@@ -1,5 +1,5 @@
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
-import 'package:admin/screens/dashboard/tasks_screen.dart';
+import 'package:admin/screens/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
