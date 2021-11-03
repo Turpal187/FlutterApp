@@ -37,7 +37,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     children: [
                       MyTasks(this._changeNotification), /// Send _changeNotification function pointer to child
                       SizedBox(height: defaultPadding),
-                      TasksTable(),
+                      TasksTable(this._changeNotification),
                     ],
                   ),
                 ),

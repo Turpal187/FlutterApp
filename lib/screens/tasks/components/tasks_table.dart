@@ -8,17 +8,21 @@ import '../../../constants.dart';
 
 class TasksTable extends StatefulWidget {
 
-  TasksTable({Key? key,}) : super(key: key);
+  final Function _notifyParent;
+
+  TasksTable(this._notifyParent) : super();
 
   @override
-  StateMVC<TasksTable> createState() => _TaskTableState();
+  StateMVC<TasksTable> createState() => _TaskTableState(this._notifyParent);
 }
 
 class _TaskTableState extends StateMVC<TasksTable> {
 
+  final Function _notifyParent;
+
   TaskController _controller = TaskController();
 
-  _TaskTableState() : super()
+  _TaskTableState(this._notifyParent) : super()
   {}
 
   @override
@@ -58,7 +62,12 @@ class _TaskTableState extends StateMVC<TasksTable> {
               ],
               rows: List.generate(
                 this._controller.tasks.length,
-                (index) => taskDataRow(this._controller.tasks[index]),
+                (index) => taskDataRow(
+                  
+                  this._controller.tasks[index], 
+                  (Task taskInstance) { this._controller.deleteTask(taskInstance); this._notifyParent(); }
+                  
+                ), // TaskDataRow()
               ),
             ),
           ),
@@ -69,7 +78,7 @@ class _TaskTableState extends StateMVC<TasksTable> {
 
 }
 
-DataRow taskDataRow(Task taskInfo) {
+DataRow taskDataRow(Task taskInfo, Function deleteMethod) {
   return DataRow(
     cells: [
       DataCell(
@@ -87,7 +96,7 @@ DataRow taskDataRow(Task taskInfo) {
       DataCell(
         Align(
           alignment: Alignment.centerRight,
-          child: IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+          child: IconButton(onPressed: () { deleteMethod(taskInfo); }, icon: Icon(Icons.delete)),
         )
       ),
     ],
