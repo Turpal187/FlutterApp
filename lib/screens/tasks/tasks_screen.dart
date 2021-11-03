@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'components/my_tasks.dart';
 import '../components/header.dart';
 import 'components/tasks_table.dart';
-import '../../models/TaskModel.dart';
 
 import '../../constants.dart';
 
@@ -25,7 +24,7 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Column(
           children: [
 
-            Header(),
+            Header("Task"),
             SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

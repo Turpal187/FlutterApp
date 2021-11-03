@@ -24,7 +24,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            Header(),
+            Header("Dashboard"),
             SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

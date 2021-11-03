@@ -22,8 +22,7 @@ class _TaskTableState extends StateMVC<TasksTable> {
 
   TaskController _controller = TaskController();
 
-  _TaskTableState(this._notifyParent) : super()
-  {}
+  _TaskTableState(this._notifyParent) : super();
 
   @override
   Widget build(BuildContext context) {

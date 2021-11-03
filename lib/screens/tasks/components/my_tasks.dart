@@ -23,8 +23,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
 
   String _newTaskName = "";
 
-  _MyTasksState(this._notifyParent) : super()
-  {}
+  _MyTasksState(this._notifyParent) : super();
 
   @override
   Widget build(BuildContext context) {
