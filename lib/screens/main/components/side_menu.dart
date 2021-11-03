@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
 
-  final Function setScreen;
+  final Function _setScreen;
 
-  const SideMenu(this.setScreen) : super();
+  const SideMenu(this._setScreen) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SideMenu extends StatelessWidget {
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
 
-              this.setScreen(new DashboardScreen());
+              this._setScreen(new DashboardScreen());
 
             },
           ),
@@ -36,7 +36,7 @@ class SideMenu extends StatelessWidget {
             svgSrc: "assets/icons/menu_task.svg",
             press: () {
 
-              this.setScreen(new TasksScreen());
+              this._setScreen(new TasksScreen());
 
             },
           ),

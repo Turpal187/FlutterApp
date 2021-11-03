@@ -1,14 +1,25 @@
-import 'package:admin/screens/tasks/components/my_tasks.dart';
+import 'package:admin/controllers/TaskController.dart';
 import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:admin/models/MyTasks.dart';
+import 'package:admin/models/TaskModel.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../../constants.dart';
 
-class TasksTable extends StatelessWidget {
-  const TasksTable({
-    Key? key,
-  }) : super(key: key);
+class TasksTable extends StatefulWidget {
+
+  TasksTable({Key? key,}) : super(key: key);
+
+  @override
+  StateMVC<TasksTable> createState() => _TaskTableState();
+}
+
+class _TaskTableState extends StateMVC<TasksTable> {
+
+  TaskController _controller = TaskController();
+
+  _TaskTableState() : super()
+  {}
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +51,14 @@ class TasksTable extends StatelessWidget {
                 DataColumn(
                   label: Text("Status"),
                 ),
+                DataColumn2(
+                  label: Text(""),
+                  size: ColumnSize.S
+                ),
               ],
               rows: List.generate(
-                demoTasks.length,
-                (index) => taskDataRow(demoTasks[index]),
+                this._controller.tasks.length,
+                (index) => taskDataRow(this._controller.tasks[index]),
               ),
             ),
           ),
@@ -51,6 +66,7 @@ class TasksTable extends StatelessWidget {
       ),
     );
   }
+
 }
 
 DataRow taskDataRow(Task taskInfo) {
@@ -68,6 +84,12 @@ DataRow taskDataRow(Task taskInfo) {
       ),
       DataCell(Text(taskInfo.date!)),
       DataCell(Text(taskInfo.status!)),
+      DataCell(
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+        )
+      ),
     ],
   );
 }

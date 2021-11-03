@@ -1,7 +1,6 @@
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
-import 'package:admin/screens/tasks/tasks_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  StatelessWidget _currentScreen = new DashboardScreen();
+  StatefulWidget _currentScreen = new DashboardScreen();
   
   void _setCurrentScreen(var screen) {
 
