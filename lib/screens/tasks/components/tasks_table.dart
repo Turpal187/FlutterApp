@@ -63,8 +63,10 @@ class _TaskTableState extends StateMVC<TasksTable> {
                 this._controller.tasks.length,
                 (index) => taskDataRow(
                   
+                  context,
                   this._controller.tasks[index], 
-                  (Task taskInstance) { this._controller.deleteTask(taskInstance); this._notifyParent(); }
+                  (Task taskInstance) { this._controller.deleteTask(taskInstance); this._notifyParent(); },
+                  (Task task, String? statusValue) { this._controller.editTask(task, statusValue); this._notifyParent(); },
                   
                 ), // TaskDataRow()
               ),
@@ -77,7 +79,11 @@ class _TaskTableState extends StateMVC<TasksTable> {
 
 }
 
-DataRow taskDataRow(Task taskInfo, Function deleteMethod) {
+// TODO: refactor into class
+DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, Function editMethod) {
+
+  String? statusValue;
+
   return DataRow(
     cells: [
       DataCell(
@@ -93,9 +99,54 @@ DataRow taskDataRow(Task taskInfo, Function deleteMethod) {
       DataCell(Text(taskInfo.date!)),
       DataCell(Text(taskInfo.status!)),
       DataCell(
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(onPressed: () { deleteMethod(taskInfo); }, icon: Icon(Icons.delete)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(onPressed: () {
+
+              showDialog(
+                
+                context: context, 
+                builder: (BuildContext context) {
+
+                  return AlertDialog(
+
+                    title: Text("Edit task"),
+                    content: DropdownButton(
+
+                      value: taskInfo.status,
+                      items: <String>['In Progress', 'Completed'].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+
+                        statusValue = value;
+
+                      },
+
+                    ),
+                    actions: <Widget>[
+
+                      TextButton(onPressed: () {
+                        editMethod(taskInfo, statusValue);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("Ok"),
+                      ),
+
+                    ],
+
+                  );
+                }
+                
+              );
+
+            }, icon: Icon(Icons.edit)),
+            IconButton(onPressed: () { deleteMethod(taskInfo); }, icon: Icon(Icons.delete)),
+          ],
         )
       ),
     ],

@@ -15,5 +15,6 @@ class TaskController extends ControllerMVC {
   List<Task> get tasks => TaskModel.demoTasks;
   void addTask(String name) => TaskModel.addTask(Task(title: name, date: DateTime.now().toString(), status: "In Progress"));
   void deleteTask(Task task) => TaskModel.deleteTask(task);
+  void editTask(Task task, String? statusValue) => TaskModel.editTask(task, statusValue);
 
 }
