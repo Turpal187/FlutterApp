@@ -36,42 +36,65 @@ class _MyTasksState extends StateMVC<MyTasks> {
               "My Tasks",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
-              onPressed: () {
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical:
+                          defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                  ),
+                  onPressed: () {
 
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Add task"),
-                      content: TextField(
-                        onChanged: (String name) {
-                          this._newTaskName = name;
-                        },
-                      ),
-                      actions: <Widget>[
-                        TextButton(onPressed: () {
-                          this._controller.addTask(this._newTaskName); // Send new task to controller singleton
-                          this._notifyParent(); // Notify parent of changes
-                          Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
-                        },
-                        child: Text("Add"),
-                        ),
-                      ],
+
+
+                  },
+                  icon: Icon(Icons.filter_alt),
+                  label: Text("Filter"),
+
+                ),
+                SizedBox(width: 10),
+                ElevatedButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical:
+                          defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                  ),
+                  onPressed: () {
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Add task"),
+                          content: TextField(
+                            onChanged: (String name) {
+                              this._newTaskName = name;
+                            },
+                          ),
+                          actions: <Widget>[
+                            TextButton(onPressed: () {
+                              this._controller.addTask(this._newTaskName); // Send new task to controller singleton
+                              this._notifyParent(); // Notify parent of changes
+                              Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
+                            },
+                            child: Text("Add"),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                );
-              },
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
-            ),
+                  icon: Icon(Icons.add),
+                  label: Text("Add New"),
+                ),
+              ],
+            )
           ],
         ),
       ],

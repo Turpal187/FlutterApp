@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'components/my_tasks.dart';
 import '../components/header.dart';
 import 'components/tasks_table.dart';
+import 'components/task_filter.dart';
 
 import '../../constants.dart';
 
@@ -35,6 +36,8 @@ class _TasksScreenState extends State<TasksScreen> {
                   child: Column(
                     children: [
                       MyTasks(this._changeNotification), /// Send _changeNotification function pointer to child
+                      SizedBox(height: defaultPadding),
+                      TaskFilter(),
                       SizedBox(height: defaultPadding),
                       TasksTable(this._changeNotification),
                     ],

@@ -6,6 +6,12 @@ class TaskModel {
   static void deleteTask(Task delTask) => TaskModel._demoTasks.remove(delTask);
   static void editTask(Task task, String? statusValue) => TaskModel._demoTasks.singleWhere((element) => element == task).status = statusValue;
 
+  static List<Task> filterTask(String? taskStatus) {
+
+    return TaskModel._demoTasks.where((element) => element.status == taskStatus).toList();
+
+  }
+
   static List<Task> _demoTasks = [
     Task(
       title: "Programming",
