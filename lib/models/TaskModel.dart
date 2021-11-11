@@ -10,26 +10,31 @@ class TaskModel {
     Task(
       title: "Programming",
       date: "01-03-2021",
+      time: "12:00 PM",
       status: "In Progress",
     ),
     Task(
       title: "Programming",
       date: "01-03-2021",
+      time: "12:00 PM",
       status: "In Progress",
     ),
     Task(
       title: "Programming",
       date: "01-03-2021",
+      time: "12:00 PM",
       status: "In Progress",
     ),
     Task(
       title: "Programming",
       date: "01-03-2021",
+      time: "12:00 PM",
       status: "In Progress",
     ),
     Task(
       title: "Programming",
       date: "01-03-2021",
+      time: "12:00 PM",
       status: "In Progress",
     ),
   ];
@@ -39,7 +44,7 @@ class TaskModel {
 
 class Task {
 
-  String? title, date, status;
+  String? title, date, time, status;
 
-  Task({this.title, this.date, this.status});
+  Task({this.title, this.date, this.time, this.status});
 }

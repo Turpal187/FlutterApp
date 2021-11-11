@@ -106,7 +106,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                       ),
                       actions: <Widget>[
                         TextButton(onPressed: () {
-                          this._controller.addTask(this._newTaskName); // Send new task to controller singleton
+                          this._controller.addTask(this._newTaskName, this._dateController.text, this._timeController.text); // Send new task to controller singleton
                           this._notifyParent(); // Notify parent of changes
                           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
                         },
@@ -140,7 +140,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
       setState(() {
 
         _selectedDate = _selected;
-        _dateController.text = _selected.toString();
+        _dateController.text = DateFormat('dd-MM-yyy').format(_selected);
         _selectTime(context);
 
       });

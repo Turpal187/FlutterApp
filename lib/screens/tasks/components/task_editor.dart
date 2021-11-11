@@ -85,7 +85,7 @@ class _TaskStatusDropdownState extends State<TaskStatusDropdown>
     return DropdownButton(
 
       value: widget.selectedValue,
-      items: <String>['In Progress', 'Test'].map<DropdownMenuItem<String>>((String value) {
+      items: <String>['In Progress', 'Completed'].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

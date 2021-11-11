@@ -55,6 +55,9 @@ class _TaskTableState extends StateMVC<TasksTable> {
                   label: Text("Date"),
                 ),
                 DataColumn(
+                  label: Text("Time"),
+                ),
+                DataColumn(
                   label: Text("Status"),
                 ),
                 DataColumn2(
@@ -102,6 +105,7 @@ DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, 
         ),
       ),
       DataCell(Text(taskInfo.date!)),
+      DataCell(Text(taskInfo.time!)),
       DataCell(Text(taskInfo.status!)),
       DataCell(
         Row(
