@@ -59,29 +59,32 @@ class _TaskEditorState extends StateMVC<TaskEditor>
 class TaskStatusDropdown extends StatefulWidget
 {
 
-  final String? _initValue;
   String? _selectedValue;
   String? get selectedValue => this._selectedValue;
 
-  TaskStatusDropdown(this._initValue): super();
+  TaskStatusDropdown(this._selectedValue): super();
 
   @override
-  State<TaskStatusDropdown> createState() => _TaskStatusDropdownState(this._initValue);
+  State<TaskStatusDropdown> createState() => _TaskStatusDropdownState();
 }
 
 class _TaskStatusDropdownState extends State<TaskStatusDropdown>
 {
 
-  final String? _initValue;
+  @override
+  void initState()
+  {
+    super.initState();
+  }
 
-  _TaskStatusDropdownState(this._initValue): super();
+  _TaskStatusDropdownState(): super();
 
   @override
   Widget build(BuildContext context)
   {
     return DropdownButton(
 
-      value: this._initValue,
+      value: widget.selectedValue,
       items: <String>['In Progress', 'Test'].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
