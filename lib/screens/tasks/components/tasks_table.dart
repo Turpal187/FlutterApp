@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:admin/models/TaskModel.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:admin/screens/tasks/components/task_editor.dart';
 
 import '../../../constants.dart';
 
@@ -23,6 +24,8 @@ class _TaskTableState extends StateMVC<TasksTable> {
   TaskController _controller = TaskController();
 
   _TaskTableState(this._notifyParent) : super();
+
+  void _changeNotification() => this.setState(() {}); /// Updated when child notifies parent
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,12 @@ class _TaskTableState extends StateMVC<TasksTable> {
                   
                   context,
                   this._controller.tasks[index], 
-                  (Task taskInstance) { this._controller.deleteTask(taskInstance); this._notifyParent(); },
-                  (Task task, String? statusValue) { this._controller.editTask(task, statusValue); this._notifyParent(); },
+                  (Task taskInstance) 
+                  { 
+                    this._controller.deleteTask(taskInstance); 
+                    this._notifyParent(); 
+                  },
+                  this._changeNotification
                   
                 ), // TaskDataRow()
               ),
@@ -80,9 +87,7 @@ class _TaskTableState extends StateMVC<TasksTable> {
 }
 
 // TODO: refactor into class
-DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, Function editMethod) {
-
-  String? statusValue;
+DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, Function notifyParent) {
 
   return DataRow(
     cells: [
@@ -109,38 +114,9 @@ DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, 
                 context: context, 
                 builder: (BuildContext context) {
 
-                  return AlertDialog(
+                  return new TaskEditor(taskInfo, notifyParent);
 
-                    title: Text("Edit task"),
-                    content: DropdownButton(
-
-                      value: taskInfo.status,
-                      items: <String>['In Progress', 'Completed'].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-
-                        statusValue = value;
-
-                      },
-
-                    ),
-                    actions: <Widget>[
-
-                      TextButton(onPressed: () {
-                        editMethod(taskInfo, statusValue);
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("Ok"),
-                      ),
-
-                    ],
-
-                  );
-                }
+                },
                 
               );
 
