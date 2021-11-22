@@ -7,7 +7,8 @@
         {
             "name": "App",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["--web-port", "5000"]
         }
     ]
 }

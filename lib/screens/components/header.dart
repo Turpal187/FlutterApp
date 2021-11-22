@@ -1,4 +1,5 @@
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/HeaderController.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,9 +37,12 @@ class Header extends StatelessWidget {
 }
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({
+  
+  ProfileCard({
     Key? key,
   }) : super(key: key);
+
+  final HeaderController _controller = HeaderController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +59,15 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset(
-            "assets/images/profile_pic.png",
+          Image.network(
+            this._controller.photo(),
             height: 38,
           ),
           if (!Responsive.isMobile(context))
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Angelina Jolie"),
+              child: Text(this._controller.name()),
             ),
           Icon(Icons.keyboard_arrow_down),
         ],

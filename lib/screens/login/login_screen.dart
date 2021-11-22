@@ -1,5 +1,10 @@
+import 'package:admin/controllers/LoginController.dart';
+import 'package:admin/controllers/MenuController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:admin/screens/main/main_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
@@ -7,11 +12,13 @@ class LoginScreen extends StatefulWidget
 {
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  StateMVC<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _LoginScreenState extends StateMVC<LoginScreen>
 {
+  LoginController _controller = LoginController();
+
   @override
   Widget build(BuildContext context)
   {
@@ -48,7 +55,25 @@ class _LoginScreenState extends State<LoginScreen>
                       SignInButton(
                         Buttons.Google,
                         text: "Sign up with Google",
-                        onPressed: () {},
+                        onPressed: () async 
+                        {  
+                          final user = await this._controller.signIn(); 
+                          if (!user)
+                          {
+                            ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text("Sign in failed..."),));
+                          }
+                          else
+                          {
+                            Navigator.of(context).pushReplacement
+                                (MaterialPageRoute(builder: (BuildContext context) => ChangeNotifierProvider(create: (context) => 
+                                
+                                    MenuController(), 
+                                    child: MainScreen()) 
+                                    
+                                  ));
+                          }
+                        },
                       ),
                       SizedBox(height: defaultPadding,)
                     ],
