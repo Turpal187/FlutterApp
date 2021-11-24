@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'components/side_menu.dart';
+
+import 'package:admin/services/google_calendar_api.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -25,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       
       this._currentScreen = screen;
+      GoogleCalendarApi.getCalendarEvents();
 
     });
 
