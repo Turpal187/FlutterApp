@@ -23,7 +23,7 @@ class GoogleCalendarApi
       (client) {
       
         var calendar = new CalendarApi(client);
-        var calEvents = calendar.events.list("primary");
+        var calEvents = calendar.events.list("ulusoy.taha061@gmail.com");
         calEvents.then((Events events) {
           
           events.items?.forEach((Event event) {
@@ -31,10 +31,12 @@ class GoogleCalendarApi
             print(event.summary);
             
           });
-      
-      });
+
+        });
     
-    }).catchError((e) => print(e));
+      }
+      
+    );
 
   }
 
