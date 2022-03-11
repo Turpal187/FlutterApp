@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'components/side_menu.dart';
 
-import 'package:admin/services/google_calendar_api.dart';
+import 'package:admin/services/mongodb_api.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -23,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       
       this._currentScreen = screen;
+      MongoDbApi.insert();
 
     });
 

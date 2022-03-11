@@ -5,11 +5,7 @@ import 'package:admin/services/google_calendar_api.dart';
 class TaskController extends ControllerMVC {
 
   static final TaskController _taskController = TaskController._internal();
-
-  factory TaskController()
-  {
-    return _taskController;
-  }
+  factory TaskController() { return _taskController; }
 
   TaskController._internal();
 
