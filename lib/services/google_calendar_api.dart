@@ -1,5 +1,6 @@
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:admin/models/TaskModel.dart';
 
 class GoogleCalendarApi
 {
@@ -38,6 +39,30 @@ class GoogleCalendarApi
       
     );
 
+  }
+
+  static void addCalendarEvent(String title, DateTime startDate, DateTime endDate)
+  {
+    clientViaServiceAccount(GoogleCalendarApi._accountCredentials, GoogleCalendarApi._scopes).then(
+      
+      (client) {
+      
+        var calendar = new CalendarApi(client);
+
+        Event event = Event();
+        event.summary = title;
+
+        EventDateTime eventStart = EventDateTime(dateTime: startDate);
+        EventDateTime eventEnd   = EventDateTime(dateTime: endDate);
+
+        event.start = eventStart;
+        event.end = eventEnd;
+
+        calendar.events.insert(event, "ulusoy.taha061@gmail.com");
+    
+      }
+      
+    );
   }
 
 }

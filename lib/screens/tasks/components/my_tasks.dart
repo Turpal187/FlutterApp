@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/extension/timeofday_extension.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:intl/intl.dart';
@@ -106,7 +107,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                       ),
                       actions: <Widget>[
                         TextButton(onPressed: () {
-                          this._controller.addTask(this._newTaskName, this._dateController.text, this._timeController.text); // Send new task to controller singleton
+                          this._controller.addTask(this._newTaskName, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
                           this._notifyParent(); // Notify parent of changes
                           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
                         },
@@ -140,7 +141,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
       setState(() {
 
         _selectedDate = _selected;
-        _dateController.text = DateFormat('dd-MM-yyy').format(_selected);
+        _dateController.text = DateFormat('yyy-MM-dd').format(_selected);
         _selectTime(context);
 
       });
@@ -154,7 +155,14 @@ class _MyTasksState extends StateMVC<MyTasks> {
     final TimeOfDay? _selected = await showTimePicker(
       
       context: context, 
-      initialTime: _selectedTime
+      initialTime: _selectedTime,
+      builder: (BuildContext context, Widget? child) 
+      {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!
+        );
+      }
       
     );
 
@@ -163,7 +171,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
       setState(() {
 
         _selectedTime = _selected;
-        _timeController.text = _selected.format(context);
+        _timeController.text = _selectedTime.to24hours();
 
       });
 
