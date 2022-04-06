@@ -275,6 +275,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  mime:
+    dependency: transitive
+    description:
+      name: mime
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.7"
   mongo_dart:
     dependency: "direct main"
     description:
@@ -429,6 +436,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  restful:
+    dependency: "direct main"
+    description:
+      name: restful
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   sasl_scram:
     dependency: transitive
     description:

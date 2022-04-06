@@ -23,7 +23,6 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       
       this._currentScreen = screen;
-      MongoDbApi.insert();
 
     });
 
