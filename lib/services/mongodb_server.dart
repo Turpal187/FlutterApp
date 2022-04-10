@@ -1,5 +1,5 @@
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:restful/restful.dart';
+// import 'package:restful/restful.dart';
 
 class MongoDbServer
 {
@@ -15,8 +15,8 @@ class MongoDbServer
 
   static void initialize() async
   {
-    Api.get('/task', () => print('post request went through'));
-    Api.listen(host: '127.0.0.1', port:5001);
+    //Api.get('/task', () => print('post request went through'));
+    //Api.listen(host: '127.0.0.1', port:5001);
   }
 
   static void disconnect() => MongoDbServer._db.close();

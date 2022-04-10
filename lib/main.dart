@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 void main() {
 
   // Init DataBase
-  MongoDbServer.connect();
+  // MongoDbServer.connect();
 
   runApp(MyApp());
 
