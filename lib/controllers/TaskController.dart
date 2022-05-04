@@ -18,9 +18,7 @@ class TaskController extends ControllerMVC {
   {
     TaskModel.addTask(Task(title: name, date: date, time: time, duration: duration, status: "In Progress")); // Add task to DataBase
     DateTime startDate = DateTime.parse(date + ' ' + time + ':00');
-    DateTime endDate   = DateTime.parse(date + ' ' + time + ':00');
-    endDate.add(Duration(minutes: duration));
-    GoogleCalendarApi.addCalendarEvent(name, startDate, endDate); // Add task to Google Calendar
+    GoogleCalendarApi.addCalendarEvent(name, startDate, startDate.add(Duration(minutes: duration))); // Add task to Google Calendar
   }
 
 }
