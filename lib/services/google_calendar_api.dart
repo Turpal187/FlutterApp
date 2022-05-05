@@ -25,7 +25,7 @@ class GoogleCalendarApi
       { 
         if (entry.primary == true)
         {
-          calendarApi.events.insert(event, entry.id ?? '');
+          // calendarApi.events.insert(event, entry.id ?? '');
         }
       }); 
     });

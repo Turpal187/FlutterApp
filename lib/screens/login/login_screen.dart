@@ -5,6 +5,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:admin/services/google_gmail_api.dart';
 
 import '../../../constants.dart';
 
@@ -65,6 +66,7 @@ class _LoginScreenState extends StateMVC<LoginScreen>
                           }
                           else
                           {
+                            GoogleGmailApi.sendMail(new GoogleMail('kadir', 'ulusoy.taha061@hotmail.com', 'tesetsubject', 'test'));
                             Navigator.of(context).pushReplacement
                                 (MaterialPageRoute(builder: (BuildContext context) => ChangeNotifierProvider(create: (context) => 
                                 

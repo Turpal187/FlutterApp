@@ -1,9 +1,5 @@
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/services/mongodb_server.dart';
-
 import 'package:admin/screens/login/login_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,8 +9,6 @@ void main() {
   // MongoDbServer.connect();
 
   runApp(MyApp());
-
-  print('app closed');
 }
 
 class MyApp extends StatefulWidget

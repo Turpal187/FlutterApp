@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'components/side_menu.dart';
 
-import 'package:admin/services/mongodb_api.dart';
-
 class MainScreen extends StatefulWidget {
 
   @override
