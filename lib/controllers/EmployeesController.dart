@@ -8,5 +8,5 @@ class EmployeesController extends ControllerMVC
 
   EmployeesController._internal();
 
-  List<Employee> get tasks => EmployeeModel.demoEmployees;
+  List<Employee> get employees => EmployeeModel.demoEmployees;
 }

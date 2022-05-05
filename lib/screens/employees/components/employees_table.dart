@@ -1,4 +1,6 @@
 import 'package:admin/constants.dart';
+import 'package:admin/controllers/EmployeesController.dart';
+import 'package:admin/models/EmployeeModel.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,10 @@ class EmployeesTable extends StatefulWidget {
 
 class _EmployeesTableState extends StateMVC<EmployeesTable> 
 {
+
+  EmployeesController _controller = EmployeesController();
+  _EmployeesTableState() : super();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,26 +45,45 @@ class _EmployeesTableState extends StateMVC<EmployeesTable>
                   label: Text("Name"),
                 ),
                 DataColumn(
-                  label: Text("Date"),
+                  label: Text("Surname"),
                 ),
                 DataColumn(
-                  label: Text("Time"),
-                ),
-                DataColumn(
-                  label: Text("Status"),
-                ),
-                DataColumn2(
-                  label: Text(""),
-                  size: ColumnSize.S
+                  label: Text("Email"),
                 ),
               ],
-              rows: [
-                
-              ],// TaskDataRow()
+              rows: List.generate
+              (
+                this._controller.employees.length, 
+                (index) => employeeDataRow
+                (
+                  context, 
+                  this._controller.employees[index]
+                )
+              )// TaskDataRow()
             ),
           ),
         ],
       ),
     );
   }
+}
+
+DataRow employeeDataRow(BuildContext context, Employee employee) {
+
+  return DataRow(
+    cells: [
+      DataCell(
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Text(employee.name!),
+            ),
+          ],
+        ),
+      ),
+      DataCell(Text(employee.surname!)),
+      DataCell(Text(employee.email!)),
+    ],
+  );
 }
