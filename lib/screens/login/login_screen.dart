@@ -66,7 +66,6 @@ class _LoginScreenState extends StateMVC<LoginScreen>
                           }
                           else
                           {
-                            GoogleGmailApi.sendMail(new GoogleMail('kadir', 'ulusoy.taha061@hotmail.com', 'tesetsubject', 'test'));
                             Navigator.of(context).pushReplacement
                                 (MaterialPageRoute(builder: (BuildContext context) => ChangeNotifierProvider(create: (context) => 
                                 

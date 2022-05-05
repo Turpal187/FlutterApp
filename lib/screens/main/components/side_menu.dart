@@ -1,5 +1,6 @@
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:admin/screens/tasks/tasks_screen.dart';
+import 'package:admin/screens/employees/employees_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,12 +28,16 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Transaction",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
+            title: "Employees",
+            svgSrc: "assets/icons/menu_profile.svg",
+            press: () {
+
+              this._setScreen(new EmployeesScreen());
+
+            },
           ),
           DrawerListTile(
-            title: "Task",
+            title: "Tasks",
             svgSrc: "assets/icons/menu_task.svg",
             press: () {
 
