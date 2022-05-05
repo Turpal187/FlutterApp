@@ -9,6 +9,7 @@ class TaskModel {
   static List<Task> _demoTasks = [
     Task(
       title: "Programming",
+      employee: "Ulusoy Taha",
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -16,6 +17,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
+      employee: "Ulusoy Taha",
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -23,6 +25,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
+      employee: "Ulusoy Taha",
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -30,6 +33,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
+      employee: "Dadaev Turpal",
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -37,6 +41,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
+      employee: "Dadaev Turpal",
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -49,8 +54,8 @@ class TaskModel {
 
 class Task {
 
-  String? title, date, time, status;
+  String? title, employee, date, time, status;
   int? duration;
 
-  Task({this.title, this.date, this.time, this.duration, this.status});
+  Task({this.title, this.employee, this.date, this.time, this.duration, this.status});
 }

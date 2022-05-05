@@ -48,18 +48,11 @@ class _TaskTableState extends StateMVC<TasksTable> {
               columnSpacing: defaultPadding,
               minWidth: 600,
               columns: [
-                DataColumn(
-                  label: Text("Name"),
-                ),
-                DataColumn(
-                  label: Text("Date"),
-                ),
-                DataColumn(
-                  label: Text("Time"),
-                ),
-                DataColumn(
-                  label: Text("Status"),
-                ),
+                DataColumn(label: Text("Name")),
+                DataColumn(label: Text("Date")),
+                DataColumn(label: Text("Time")),
+                DataColumn(label: Text("Status")),
+                DataColumn(label: Text("Employee")),
                 DataColumn2(
                   label: Text(""),
                   size: ColumnSize.S
@@ -86,10 +79,8 @@ class _TaskTableState extends StateMVC<TasksTable> {
       ),
     );
   }
-
 }
 
-// TODO: refactor into class
 DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, Function notifyParent) {
 
   return DataRow(
@@ -104,6 +95,7 @@ DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, 
           ],
         ),
       ),
+      DataCell(Text(taskInfo.employee!)),
       DataCell(Text(taskInfo.date!)),
       DataCell(Text(taskInfo.time!)),
       DataCell(Text(taskInfo.status!)),

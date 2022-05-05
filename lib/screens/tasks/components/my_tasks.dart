@@ -1,3 +1,5 @@
+import 'package:admin/controllers/EmployeesController.dart';
+import 'package:admin/models/EmployeeModel.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/extension/timeofday_extension.dart';
@@ -25,6 +27,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
   final Function _notifyParent;
 
   String _newTaskName = "";
+  String _newEmployee = "${EmployeeModel.demoEmployees[0].surname} ${EmployeeModel.demoEmployees[0].name}";
   int _newTaskDuration = 0;
 
   DateTime _selectedDate = DateTime.now();
@@ -72,6 +75,15 @@ class _MyTasksState extends StateMVC<MyTasks> {
                                 this._newTaskName = name;
                               },
                             ),
+                            DropdownButton(
+                              isExpanded: true,
+                              value: '${this._controller.employees[0].surname} ${this._controller.employees[0].name}',
+                              items: this._controller.employees.map((e) => DropdownMenuItem(value: '${e.surname} ${e.name}', child: Text('${e.surname!} ${e.name!}'))).toList(),
+                              onChanged: (String? value)
+                              {
+                                _newEmployee = value!;
+                              }
+                            ),
                             TextField(
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -106,7 +118,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                       ),
                       actions: <Widget>[
                         TextButton(onPressed: () {
-                          this._controller.addTask(this._newTaskName, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
+                          this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
                           this._notifyParent(); // Notify parent of changes
                           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
                         },
