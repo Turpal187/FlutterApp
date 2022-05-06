@@ -68,8 +68,8 @@ class _EmployeesTableState extends StateMVC<EmployeesTable>
   }
 }
 
-DataRow employeeDataRow(BuildContext context, Employee employee) {
-
+DataRow employeeDataRow(BuildContext context, Employee employee) 
+{
   return DataRow(
     cells: [
       DataCell(

@@ -28,6 +28,7 @@ dependencies:
     sdk: flutter
 
   enough_mail: ^1.3.4
+  uuid: 3.0.6
 
   mvc_pattern: ^7.0.0
   intl: ^0.17.0

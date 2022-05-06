@@ -1,3 +1,5 @@
+import 'package:admin/services/uuid_generator.dart';
+
 class EmployeeModel
 {
   static List<Employee> get demoEmployees => EmployeeModel._demoEmployees;
@@ -10,6 +12,7 @@ class EmployeeModel
 
 class Employee
 {
+  String id = UuidGenerator.generate();
   String? name, surname, email;
   Employee({this.name, this.surname, this.email});
 }
