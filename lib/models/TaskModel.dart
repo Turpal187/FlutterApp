@@ -1,3 +1,5 @@
+import 'package:admin/models/EmployeeModel.dart';
+
 class TaskModel {
 
   static List<Task> get demoTasks => TaskModel._demoTasks;
@@ -9,7 +11,7 @@ class TaskModel {
   static List<Task> _demoTasks = [
     Task(
       title: "Programming",
-      employee: "Ulusoy Taha",
+      employee: EmployeeModel.demoEmployees[0].id,
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -17,7 +19,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
-      employee: "Ulusoy Taha",
+      employee: EmployeeModel.demoEmployees[0].id,
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -25,7 +27,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
-      employee: "Ulusoy Taha",
+      employee: EmployeeModel.demoEmployees[0].id,
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -33,7 +35,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
-      employee: "Dadaev Turpal",
+      employee: EmployeeModel.demoEmployees[1].id,
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,
@@ -41,7 +43,7 @@ class TaskModel {
     ),
     Task(
       title: "Programming",
-      employee: "Dadaev Turpal",
+      employee: EmployeeModel.demoEmployees[1].id,
       date: "01-03-2021",
       time: "12:00 PM",
       duration: 60,

@@ -4,6 +4,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:admin/models/TaskModel.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:admin/screens/tasks/components/task_editor.dart';
+import 'package:admin/models/EmployeeModel.dart';
 
 import '../../../constants.dart';
 
@@ -49,10 +50,10 @@ class _TaskTableState extends StateMVC<TasksTable> {
               minWidth: 600,
               columns: [
                 DataColumn(label: Text("Name")),
+                DataColumn(label: Text("Employee")),
                 DataColumn(label: Text("Date")),
                 DataColumn(label: Text("Time")),
                 DataColumn(label: Text("Status")),
-                DataColumn(label: Text("Employee")),
                 DataColumn2(
                   label: Text(""),
                   size: ColumnSize.S
@@ -95,7 +96,7 @@ DataRow taskDataRow(BuildContext context, Task taskInfo, Function deleteMethod, 
           ],
         ),
       ),
-      DataCell(Text(taskInfo.employee!)),
+      DataCell(Text(EmployeeModel.employee(taskInfo.employee!).toString())),
       DataCell(Text(taskInfo.date!)),
       DataCell(Text(taskInfo.time!)),
       DataCell(Text(taskInfo.status!)),
