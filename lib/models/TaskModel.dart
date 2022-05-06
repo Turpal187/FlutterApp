@@ -50,8 +50,6 @@ class TaskModel {
       status: "In Progress",
     ),
   ];
-
-  
 }
 
 class Task {
@@ -60,4 +58,6 @@ class Task {
   int? duration;
 
   Task({this.title, this.employee, this.date, this.time, this.duration, this.status});
+
+  Employee get assigned => EmployeeModel.employee(this.employee!);
 }

@@ -27,7 +27,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
   final Function _notifyParent;
 
   String _newTaskName = "";
-  String _newEmployee = "${EmployeeModel.demoEmployees[0].surname} ${EmployeeModel.demoEmployees[0].name}";
+  String _newEmployee = EmployeeModel.demoEmployees[0].id;
   int _newTaskDuration = 0;
 
   DateTime _selectedDate = DateTime.now();
@@ -77,8 +77,8 @@ class _MyTasksState extends StateMVC<MyTasks> {
                             ),
                             DropdownButton(
                               isExpanded: true,
-                              value: '${this._controller.employees[0].surname} ${this._controller.employees[0].name}',
-                              items: this._controller.employees.map((e) => DropdownMenuItem(value: '${e.surname} ${e.name}', child: Text('${e.surname!} ${e.name!}'))).toList(),
+                              value: this._controller.employees[0].id,
+                              items: this._controller.employees.map((e) => DropdownMenuItem(value: e.id, child: Text(e.toString()))).toList(),
                               onChanged: (String? value)
                               {
                                 _newEmployee = value!;
