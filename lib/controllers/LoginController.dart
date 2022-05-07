@@ -21,7 +21,7 @@ class LoginController extends ChangeNotifier
 
     UserModel.write(user);
     await GoogleDriveApi.init();
-    await GoogleSheetsApi.init();
+    // await GoogleSheetsApi.init();
 
     return true;
   }

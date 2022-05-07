@@ -31,15 +31,20 @@ class GoogleSheetsApi
 
         GoogleSheetsApi._sheetId = addedsheet?.spreadsheetId;
         GoogleDriveApi.move(GoogleDriveApi.rootName!, GoogleSheetsApi._sheetTitle);
+
+        // Init header of sheet
+        print('Writing header on sheet...');
+        GoogleSheetsApi._sheetsApi?.spreadsheets.values.append
+        (ValueRange(majorDimension: 'COLUMNS', range: 'main!A1:C1', values: [['test1'], ['test2'], ['test3']]), 
+         GoogleSheetsApi._sheetId!, 'main!A1:C1', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
+
       } else { GoogleSheetsApi._sheetId = sheet; }
 
-      print('Selected sheet ${ GoogleSheetsApi._sheetId }');
+      print('Found sheet ${ GoogleSheetsApi._sheetId }');
 
     });
   }
   
-  static Future<void> create() async
-  {
-    GoogleSheetsApi._sheetsApi?.spreadsheets.create(new Spreadsheet(sheets: [new Sheet(properties: new SheetProperties(title: 'FlutterTestSheet'))]));
-  }
+  static Future<void> create() async => 
+  GoogleSheetsApi._sheetsApi?.spreadsheets.create(new Spreadsheet(sheets: [new Sheet(properties: new SheetProperties(title: 'FlutterTestSheet'))]));
 }

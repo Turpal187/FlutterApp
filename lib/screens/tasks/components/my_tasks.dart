@@ -64,7 +64,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
               ),
               onPressed: () async {
 
-                // GoogleDriveApi.remove('FlutterTodoSheet');
+                GoogleDriveApi.remove('FlutterTodoSheet');
                 // GoogleDriveApi.find('');
                 // GoogleSheetsApi.create();
 
