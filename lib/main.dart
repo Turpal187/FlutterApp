@@ -3,7 +3,7 @@ import 'package:admin/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
 
   // Init DataBase
   // MongoDbServer.connect();

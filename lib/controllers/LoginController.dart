@@ -1,7 +1,8 @@
 import 'package:admin/services/google_auth_api.dart';
 import 'package:admin/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:admin/services/google_drive_api.dart';
+import 'package:admin/services/google_sheets_api.dart';
 
 class LoginController extends ChangeNotifier
 {
@@ -19,6 +20,9 @@ class LoginController extends ChangeNotifier
     }
 
     UserModel.write(user);
+    await GoogleDriveApi.init();
+    await GoogleSheetsApi.init();
+
     return true;
   }
 }

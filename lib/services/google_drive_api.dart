@@ -13,50 +13,61 @@ class GoogleDriveApi
   static final String _rootName = '123';
   static String? _rootId;
 
-  static Future<void> upload(String directory, PlatformFile toupload) async
+  static String? get rootName => GoogleDriveApi._rootName;
+
+  static Future<void> init() async
   {
     GoogleDriveApi._authClient = await GoogleAuthApi.googleSignIn.authenticatedClient();
     GoogleDriveApi._driveApi = new DriveApi(GoogleDriveApi._authClient!);
 
-    GoogleDriveApi._find(GoogleDriveApi._rootName).then(
-      
+    GoogleDriveApi.find(GoogleDriveApi._rootName).then(
       (response) async
       {
         if (response == null)
         { // Root folder doesnt exist yet, so create it
+          print('Root file not found...');
           print('Creating root file... ${ GoogleDriveApi._rootName }');
           final rootfile = await GoogleDriveApi._create('', GoogleDriveApi._rootName);
           GoogleDriveApi._rootId = rootfile?.id;
         } else { GoogleDriveApi._rootId = response; }
 
         print('Found root file... ${ GoogleDriveApi._rootId }');
-
-        // Check if the directory already exists otherwise create it
-        GoogleDriveApi._find(directory).then(
-          (foundfile) async 
-          {
-            String? directoryId;
-            if (foundfile == null) 
-            { // Directory not found
-              print('Creating subdirectory...  $directory');
-              final createdfile = await GoogleDriveApi._create(GoogleDriveApi._rootId!, directory);
-              directoryId = createdfile?.id;
-            }
-            else { directoryId = foundfile; }
-            print('Found subdirectory... $directoryId');
-
-            print('Uploading file... ${ toupload.name }');
-            GoogleDriveApi._driveApi?.files.create(
-              new File(name: toupload.name, 
-                       parents: [directoryId!]
-                       ), 
-                       uploadMedia: new Media(toupload.readStream!, toupload.size));
-          }
-        );
       }
-      
     );
+  }
 
+  static Future<void> upload(String directory, PlatformFile toupload) async
+  {
+    // Check if the directory already exists otherwise create it
+    GoogleDriveApi.find(directory).then(
+      (foundfile) async 
+      {
+        String? directoryId;
+        if (foundfile == null) 
+        { // Directory not found
+          print('Subdirectory not found...');
+          print('Creating subdirectory...  $directory');
+          final createdfile = await GoogleDriveApi._create(GoogleDriveApi._rootId!, directory);
+          directoryId = createdfile?.id;
+        }
+        else { directoryId = foundfile; }
+
+        print('Uploading file... ${ toupload.name } under $directory');
+        GoogleDriveApi._driveApi?.files.create(
+          new File(name: toupload.name, 
+                    parents: [directoryId!]
+                    ), 
+                    uploadMedia: new Media(toupload.readStream!, toupload.size));
+      }
+    );
+  }
+
+  static Future<void> move(String parentName, String fileName) async
+  {
+    final parentId = await GoogleDriveApi.find(parentName);
+    final fileId = await GoogleDriveApi.find(fileName);
+    print('Moving file $fileName under $parentName');
+    GoogleDriveApi._driveApi?.files.update(new File(), fileId!, addParents: parentId!);
   }
 
   static Future<PlatformFile?> choose() async
@@ -65,7 +76,7 @@ class GoogleDriveApi
     return file?.files.first;
   }
 
-  static Future<String?> _find(String folder) async
+  static Future<String?> find(String folder) async
   {
     print('Searching file $folder');
     return GoogleDriveApi._driveApi?.files.list().then((files) => 
@@ -81,5 +92,17 @@ class GoogleDriveApi
     }
 
     return await GoogleDriveApi._driveApi?.files.create(tocreate);
+  }
+
+  static void list() => GoogleDriveApi._driveApi?.files.list().then((file) => file.files?.forEach((element) { print(element.name); }));
+  
+  static Future<void> remove(String fileName) async
+  {
+    final fileId = await GoogleDriveApi.find(fileName);
+    if (fileId != null)
+    {
+      print('Removing file $fileName');
+      GoogleDriveApi._driveApi?.files.delete(fileId);
+    }
   }
 }
