@@ -10,7 +10,7 @@ class GoogleDriveApi
 
   static AuthClient? _authClient;
   static DriveApi? _driveApi;
-  static final String _rootName = 'FlutterTodoApp';
+  static final String _rootName = '123';
   static String? _rootId;
 
   static Future<void> upload(String directory, PlatformFile toupload) async
@@ -25,7 +25,7 @@ class GoogleDriveApi
         if (response == null)
         { // Root folder doesnt exist yet, so create it
           print('Creating root file... ${ GoogleDriveApi._rootName }');
-          final rootfile = await GoogleDriveApi._create([''], GoogleDriveApi._rootName);
+          final rootfile = await GoogleDriveApi._create('', GoogleDriveApi._rootName);
           GoogleDriveApi._rootId = rootfile?.id;
         } else { GoogleDriveApi._rootId = response; }
 
@@ -39,7 +39,7 @@ class GoogleDriveApi
             if (foundfile == null) 
             { // Directory not found
               print('Creating subdirectory...  $directory');
-              final createdfile = await GoogleDriveApi._create([GoogleDriveApi._rootId!], directory);
+              final createdfile = await GoogleDriveApi._create(GoogleDriveApi._rootId!, directory);
               directoryId = createdfile?.id;
             }
             else { directoryId = foundfile; }
@@ -72,6 +72,14 @@ class GoogleDriveApi
       files.files?.firstWhereOrNull((element) => element.name == folder)?.id);
   }
 
-  static Future<File?> _create(List<String> path, String fname) async => await GoogleDriveApi._driveApi?.files.create
-  (new File(name: fname, mimeType: 'application/vnd.google-apps.folder', parents: path));
+  static Future<File?> _create(String path, String fname) async
+  {
+    final tocreate = new File(name: fname, mimeType: 'application/vnd.google-apps.folder');
+    if (path.isNotEmpty)
+    {
+      tocreate.parents = [path];
+    }
+
+    return await GoogleDriveApi._driveApi?.files.create(tocreate);
+  }
 }
