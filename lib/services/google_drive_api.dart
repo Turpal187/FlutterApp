@@ -3,56 +3,75 @@ import 'package:file_picker/file_picker.dart';
 import 'package:googleapis/drive/v3.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:collection/collection.dart';
 
 class GoogleDriveApi
 {
 
   static AuthClient? _authClient;
   static DriveApi? _driveApi;
-  static final String _directoryName = 'FlutterTodoApp';
-  static String? _directoryId;
+  static final String _rootName = 'FlutterTodoApp';
+  static String? _rootId;
 
-  static Future<void> upload() async
+  static Future<void> upload(String directory, PlatformFile toupload) async
   {
     GoogleDriveApi._authClient = await GoogleAuthApi.googleSignIn.authenticatedClient();
     GoogleDriveApi._driveApi = new DriveApi(GoogleDriveApi._authClient!);
 
-    // Search for the _directoryName inside the drive root
-    GoogleDriveApi._find().then((e) async
-    {
-      // If not found create and assign the folderId
-      if (e == null) { await GoogleDriveApi._create(); }
-      else { GoogleDriveApi._directoryId = e; }
+    GoogleDriveApi._find(GoogleDriveApi._rootName).then(
+      
+      (response) async
+      {
+        if (response == null)
+        { // Root folder doesnt exist yet, so create it
+          print('Creating root file... ${ GoogleDriveApi._rootName }');
+          final rootfile = await GoogleDriveApi._create([''], GoogleDriveApi._rootName);
+          GoogleDriveApi._rootId = rootfile?.id;
+        } else { GoogleDriveApi._rootId = response; }
 
-      GoogleDriveApi._choose();
+        print('Found root file... ${ GoogleDriveApi._rootId }');
 
-    });
+        // Check if the directory already exists otherwise create it
+        GoogleDriveApi._find(directory).then(
+          (foundfile) async 
+          {
+            String? directoryId;
+            if (foundfile == null) 
+            { // Directory not found
+              print('Creating subdirectory...  $directory');
+              final createdfile = await GoogleDriveApi._create([GoogleDriveApi._rootId!], directory);
+              directoryId = createdfile?.id;
+            }
+            else { directoryId = foundfile; }
+            print('Found subdirectory... $directoryId');
+
+            print('Uploading file... ${ toupload.name }');
+            GoogleDriveApi._driveApi?.files.create(
+              new File(name: toupload.name, 
+                       parents: [directoryId!]
+                       ), 
+                       uploadMedia: new Media(toupload.readStream!, toupload.size));
+          }
+        );
+      }
+      
+    );
 
   }
 
-  static Future<void> _choose() async
+  static Future<PlatformFile?> choose() async
   {
     var file = await FilePicker.platform.pickFiles(withReadStream: true);
-    if (file != null)
-    {
-      final platformFile = file.files.first;
-      GoogleDriveApi._driveApi?.files.create
-      (
-        new File(name: platformFile.name, parents: [GoogleDriveApi._directoryId!]), 
-        uploadMedia: new Media(platformFile.readStream!, platformFile.size)
-      );
-    }
+    return file?.files.first;
   }
 
-  static Future<String?> _find() async
+  static Future<String?> _find(String folder) async
   {
-    return GoogleDriveApi._driveApi?.files.list().then((files)
-    {
-      return files.files?.map((e)
-      { if (e.name == GoogleDriveApi._directoryName) { return e.id; }
-      }).first;
-    });
+    print('Searching file $folder');
+    return GoogleDriveApi._driveApi?.files.list().then((files) => 
+      files.files?.firstWhereOrNull((element) => element.name == folder)?.id);
   }
 
-  static Future<void> _create() async => await GoogleDriveApi._driveApi?.files.create(new File(name: GoogleDriveApi._directoryName, mimeType: 'application/vnd.google-apps.folder'));
+  static Future<File?> _create(List<String> path, String fname) async => await GoogleDriveApi._driveApi?.files.create
+  (new File(name: fname, mimeType: 'application/vnd.google-apps.folder', parents: path));
 }

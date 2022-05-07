@@ -1,6 +1,7 @@
 import 'package:admin/controllers/EmployeesController.dart';
 import 'package:admin/models/EmployeeModel.dart';
 import 'package:admin/services/google_auth_api.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/extension/timeofday_extension.dart';
@@ -31,6 +32,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
   String _newTaskName = "";
   String _newEmployee = EmployeeModel.demoEmployees[0].id;
   int _newTaskDuration = 0;
+  PlatformFile? _chosenFile;
 
   DateTime _selectedDate = DateTime.now();
   final TextEditingController _dateController = new TextEditingController(text: DateFormat.yMd().format(DateTime.now()));
@@ -120,8 +122,10 @@ class _MyTasksState extends StateMVC<MyTasks> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  GoogleDriveApi.upload();
+                                onPressed: () async {
+                                  
+                                  this._chosenFile = await GoogleDriveApi.choose();
+
                                 }, 
                                 child: Icon(Icons.file_present_outlined)
                               )
@@ -132,6 +136,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                       actions: <Widget>[
                         TextButton(onPressed: () {
                           this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
+                          GoogleDriveApi.upload(this._newTaskName, this._chosenFile!);
                           this._notifyParent(); // Notify parent of changes
                           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
                         },
