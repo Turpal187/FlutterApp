@@ -63,94 +63,89 @@ class _MyTasksState extends StateMVC<MyTasks> {
                 ),
               ),
               onPressed: () async {
-
-                GoogleDriveApi.remove('FlutterTodoSheet');
-                // GoogleDriveApi.find('');
-                // GoogleSheetsApi.create();
-
-                // showDialog(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return AlertDialog(
-                //       title: Text("Add task"),
-                //       content: 
-                //       IntrinsicHeight(
-                //         child: Column(
-                //           children: [
-                //             TextField(
-                //               decoration: new InputDecoration(
-                //                 hintText: "Title"
-                //               ),
-                //               onChanged: (String name) {
-                //                 this._newTaskName = name;
-                //               },
-                //             ),
-                //             DropdownButton(
-                //               isExpanded: true,
-                //               value: this._controller.employees[0].id,
-                //               items: this._controller.employees.map((e) => DropdownMenuItem(value: e.id, child: Text(e.toString()))).toList(),
-                //               onChanged: (String? value)
-                //               {
-                //                 _newEmployee = value!;
-                //               }
-                //             ),
-                //             TextField(
-                //               keyboardType: TextInputType.number,
-                //               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                //               decoration: new InputDecoration(
-                //                 hintText: "Duration (min)"
-                //               ),
-                //               onChanged: (String duration) {
-                //                 _newTaskDuration = int.parse(duration);
-                //               },
-                //             ),
-                //             SizedBox(height: defaultPadding),
-                //             TextField(
-                //               enabled: false,
-                //               controller: _dateController,
-                //             ),
-                //             TextField(
-                //               enabled: false,
-                //               controller: _timeController,
-                //             ),
-                //             SizedBox(height: defaultPadding),
-                //             SizedBox(
-                //               width: double.infinity,
-                //               child: ElevatedButton(
-                //                 onPressed: () {
-                //                   _selectDate(context);
-                //                 }, 
-                //                 child: Icon(Icons.date_range)
-                //               )
-                //             ),
-                //             SizedBox(height: defaultPadding),
-                //             SizedBox(
-                //               width: double.infinity,
-                //               child: ElevatedButton(
-                //                 onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Add task"),
+                      content: 
+                      IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            TextField(
+                              decoration: new InputDecoration(
+                                hintText: "Title"
+                              ),
+                              onChanged: (String name) {
+                                this._newTaskName = name;
+                              },
+                            ),
+                            DropdownButton(
+                              isExpanded: true,
+                              value: this._controller.employees[0].id,
+                              items: this._controller.employees.map((e) => DropdownMenuItem(value: e.id, child: Text(e.toString()))).toList(),
+                              onChanged: (String? value)
+                              {
+                                _newEmployee = value!;
+                              }
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                              decoration: new InputDecoration(
+                                hintText: "Duration (min)"
+                              ),
+                              onChanged: (String duration) {
+                                _newTaskDuration = int.parse(duration);
+                              },
+                            ),
+                            SizedBox(height: defaultPadding),
+                            TextField(
+                              enabled: false,
+                              controller: _dateController,
+                            ),
+                            TextField(
+                              enabled: false,
+                              controller: _timeController,
+                            ),
+                            SizedBox(height: defaultPadding),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  _selectDate(context);
+                                }, 
+                                child: Icon(Icons.date_range)
+                              )
+                            ),
+                            SizedBox(height: defaultPadding),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
                                   
-                //                   this._chosenFile = await GoogleDriveApi.choose();
+                                  this._chosenFile = await GoogleDriveApi.choose();
 
-                //                 }, 
-                //                 child: Icon(Icons.file_present_outlined)
-                //               )
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //       actions: <Widget>[
-                //         TextButton(onPressed: () {
-                //           this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
-                //           GoogleDriveApi.upload(this._newTaskName, this._chosenFile!);
-                //           this._notifyParent(); // Notify parent of changes
-                //           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
-                //         },
-                //         child: Text("Add"),
-                //         ),
-                //       ],
-                //     );
-                //   },
-                // );
+                                }, 
+                                child: Icon(Icons.file_present_outlined)
+                              )
+                            )
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(onPressed: () {
+                          this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
+                          GoogleDriveApi.upload(this._newTaskName, this._chosenFile!);
+                          this._notifyParent(); // Notify parent of changes
+                          Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item
+                        },
+                        child: Text("Add"),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               icon: Icon(Icons.add),
               label: Text("Add New"),

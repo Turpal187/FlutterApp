@@ -18,7 +18,8 @@ class GoogleMail
 class GoogleGmailApi
 {
   static Future<void> sendMail(GoogleMail mail) async
-  {
+  { 
+    print('Sending mail to ${ mail.recipientName }');
     final authClient = await GoogleAuthApi.googleSignIn.authenticatedClient(); 
     final gmailApi = new GmailApi(authClient!);
 

@@ -1,4 +1,5 @@
 import 'package:admin/models/EmployeeModel.dart';
+import 'package:admin/models/TaskModel.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:admin/services/google_auth_api.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
@@ -44,7 +45,7 @@ class GoogleSheetsApi
     (
       new Spreadsheet(properties: new SpreadsheetProperties(title: GoogleSheetsApi._sheetTitle),
                       sheets: [new Sheet(properties: new SheetProperties(title: 'employees')), 
-                                new Sheet(properties: new SheetProperties(title: 'tasks'))])
+                               new Sheet(properties: new SheetProperties(title: 'tasks'))])
     );
 
     GoogleSheetsApi._sheetId = addedsheet?.spreadsheetId;
@@ -65,10 +66,21 @@ class GoogleSheetsApi
 
   static Future<void> _syncData() async
   {
+    print('Syncing employees...');
     GoogleSheetsApi._sheetsApi?.spreadsheets.values.get(GoogleSheetsApi._sheetId!, 'employees!B2:D').then(
       (values)
       {
         values.values?.forEach((element) { EmployeeModel.add(new Employee(name: element[0].toString(), surname: element[1].toString(), email: element[2].toString())); });
+      }
+    );
+
+    print('Syncing tasks...');
+    GoogleSheetsApi._sheetsApi?.spreadsheets.values.get(GoogleSheetsApi._sheetId!, 'tasks!A2:F').then(
+      (values)
+      {
+        values.values?.forEach((element) { TaskModel.addTask(
+          new Task(title: element[0].toString(), employee: element[1].toString(), date: element[2].toString(), 
+                   time: element[3].toString(), duration: int.parse(element[4].toString()), status: element[5].toString())); });
       }
     );
   }
@@ -79,5 +91,13 @@ class GoogleSheetsApi
     GoogleSheetsApi._sheetsApi?.spreadsheets.values.append
     (ValueRange(majorDimension: 'COLUMNS', range: 'employees!A:D', values: [[employee.id], [employee.name], [employee.surname], [employee.email]]), 
       GoogleSheetsApi._sheetId!, 'employees!A:D', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
+  }
+
+  static void saveTask(Task task)
+  {
+    print('Saving task ${ task.title }');
+    GoogleSheetsApi._sheetsApi?.spreadsheets.values.append
+    (ValueRange(majorDimension: 'COLUMNS', range: 'tasks!A:F', values: [[task.title], [task.employee], [task.date], [task.time], [task.duration], [task.status]]), 
+      GoogleSheetsApi._sheetId!, 'tasks!A:F', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
   }
 }

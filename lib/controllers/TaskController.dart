@@ -19,7 +19,9 @@ class TaskController extends ControllerMVC {
 
   void addTask(String name, String employee, String date, String time, int duration)
   {
-    TaskModel.addTask(Task(title: name, employee: employee, date: date, time: time, duration: duration, status: "In Progress")); // Add task to DataBase
+    final newTask = Task(title: name, employee: employee, date: date, time: time, duration: duration, status: "In Progress");
+    TaskModel.addTask(newTask); // Add task to DataBase
+    TaskModel.saveTask(newTask);
     DateTime startDate = DateTime.parse(date + ' ' + time + ':00');
     GoogleCalendarApi.addCalendarEvent(name, startDate, startDate.add(Duration(minutes: duration))); // Add task to Google Calendar
     
