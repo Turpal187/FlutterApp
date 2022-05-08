@@ -1,5 +1,6 @@
 import 'package:admin/models/TaskModel.dart';
 import 'package:admin/models/EmployeeModel.dart';
+import 'package:admin/services/google_drive_api.dart';
 import 'package:admin/services/google_gmail_api.dart';
 import 'package:admin/services/google_sheets_api.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -19,6 +20,7 @@ class TaskController extends ControllerMVC {
   {
     TaskModel.deleteTask(task);
     GoogleSheetsApi.deleteTask(task.id!);
+    GoogleDriveApi.remove(task.title!);
   }
   void editTask(Task task, String? statusValue) => TaskModel.editTask(task, statusValue);
 

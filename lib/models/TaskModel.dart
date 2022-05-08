@@ -9,6 +9,7 @@ class TaskModel
   static void addTask(Task newTask) => TaskModel._demoTasks.add(newTask);
   static void deleteTask(Task delTask) => TaskModel._demoTasks.remove(delTask);
   static void editTask(Task task, String? statusValue) => TaskModel._demoTasks.singleWhere((element) => element == task).status = statusValue;
+  static bool isAssigned(Employee employee) => TaskModel._demoTasks.where((element) => element.employee == employee.id).isNotEmpty;
 
   static List<Task> _demoTasks = [];
 }
