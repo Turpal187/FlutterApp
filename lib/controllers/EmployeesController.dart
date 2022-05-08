@@ -1,4 +1,5 @@
 import 'package:admin/models/EmployeeModel.dart';
+import 'package:admin/services/google_sheets_api.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class EmployeesController extends ControllerMVC 
@@ -12,6 +13,12 @@ class EmployeesController extends ControllerMVC
   void add(Employee employee)
   {
     EmployeeModel.add(employee);
-    EmployeeModel.save(employee);
+    GoogleSheetsApi.saveEmployee(employee);
+  }
+
+  void remove(Employee employee)
+  {
+    EmployeeModel.remove(employee);
+    GoogleSheetsApi.deleteEmployee(employee.id!);
   }
 }

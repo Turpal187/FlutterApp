@@ -1,5 +1,6 @@
 import 'package:admin/models/EmployeeModel.dart';
 import 'package:admin/models/TaskModel.dart';
+import 'package:googleapis/shared.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:admin/services/google_auth_api.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
@@ -12,6 +13,9 @@ class GoogleSheetsApi
   static SheetsApi? _sheetsApi;
   static String _sheetTitle = 'FlutterTodoSheet';
   static String? _sheetId;
+  static int? _taskGid; // sheetid of tasks
+  static int? _employeesGid; // sheetid of employees
+  static Spreadsheet? _spreadsheet;
 
   static Future<void> init() async
   {
@@ -30,6 +34,9 @@ class GoogleSheetsApi
       } else { GoogleSheetsApi._sheetId = sheet; }
 
       print('Found sheet ${ GoogleSheetsApi._sheetId }');
+      GoogleSheetsApi._spreadsheet = await GoogleSheetsApi._sheetsApi?.spreadsheets.get(GoogleSheetsApi._sheetId!);
+      GoogleSheetsApi._employeesGid = GoogleSheetsApi._spreadsheet?.sheets?.first.properties?.sheetId;
+      GoogleSheetsApi._taskGid = GoogleSheetsApi._spreadsheet?.sheets?.last.properties?.sheetId;
       GoogleSheetsApi._syncData();
 
     });
@@ -105,6 +112,34 @@ class GoogleSheetsApi
   static void deleteTask(String taskId)
   {
     print('Deleting task from sheet $taskId');
-    // GoogleSheetsApi._sheetsApi?.spreadsheets.values.clear(, GoogleSheetsApi._sheetId!, 'tasks!TANGE');
+    GoogleSheetsApi._findRow('tasks', taskId).then((e)
+    {
+      GoogleSheetsApi._sheetsApi?.spreadsheets.batchUpdate(BatchUpdateSpreadsheetRequest(requests: 
+        [Request(deleteDimension: DeleteDimensionRequest(range: DimensionRange(sheetId: GoogleSheetsApi._taskGid, dimension: 'ROWS', startIndex: e, endIndex: e! + 1)))]), 
+        GoogleSheetsApi._sheetId!);
+    });
+  }
+
+  static void deleteEmployee(String employeeId)
+  {
+    print('Deleting employee from sheet $employeeId');
+    GoogleSheetsApi._findRow('employees', employeeId).then((e)
+    {
+      GoogleSheetsApi._sheetsApi?.spreadsheets.batchUpdate(BatchUpdateSpreadsheetRequest(requests: 
+        [Request(deleteDimension: DeleteDimensionRequest(range: DimensionRange(sheetId: GoogleSheetsApi._employeesGid, dimension: 'ROWS', startIndex: e, endIndex: e! + 1)))]), 
+        GoogleSheetsApi._sheetId!);
+    });
+  }
+
+  static Future<int?> _findRow(String sheet, String id) async
+  {
+    final valueRange = await GoogleSheetsApi._sheetsApi?.spreadsheets.values.get(GoogleSheetsApi._sheetId!, '$sheet!A:A', majorDimension: 'COLUMNS');
+    final ids = valueRange?.values?.first ?? [];
+    if (ids.isNotEmpty)
+    {
+      return ids.indexOf(id);
+    }
+
+    return null;
   }
 }

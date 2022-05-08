@@ -8,7 +8,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 
 class EmployeesTable extends StatefulWidget {
 
-  EmployeesTable() : super();
+  final Function _notifyParent;
+  EmployeesTable(this._notifyParent) : super();
 
   @override
   StateMVC<EmployeesTable> createState() => _EmployeesTableState();
@@ -50,6 +51,10 @@ class _EmployeesTableState extends StateMVC<EmployeesTable>
                 DataColumn(
                   label: Text("Email"),
                 ),
+                DataColumn2(
+                  label: Text(""),
+                  size: ColumnSize.S
+                ),
               ],
               rows: List.generate
               (
@@ -57,7 +62,12 @@ class _EmployeesTableState extends StateMVC<EmployeesTable>
                 (index) => employeeDataRow
                 (
                   context, 
-                  this._controller.employees[index]
+                  this._controller.employees[index],
+                  (Employee employee)
+                  {
+                    this._controller.remove(employee);
+                    widget._notifyParent();
+                  }
                 )
               )// TaskDataRow()
             ),
@@ -68,7 +78,7 @@ class _EmployeesTableState extends StateMVC<EmployeesTable>
   }
 }
 
-DataRow employeeDataRow(BuildContext context, Employee employee) 
+DataRow employeeDataRow(BuildContext context, Employee employee, Function deleteMethod) 
 {
   return DataRow(
     cells: [
@@ -84,6 +94,14 @@ DataRow employeeDataRow(BuildContext context, Employee employee)
       ),
       DataCell(Text(employee.surname!)),
       DataCell(Text(employee.email!)),
+      DataCell(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(onPressed: () { deleteMethod(employee); }, icon: Icon(Icons.delete)),
+          ],
+        ),
+      ),
     ],
   );
 }

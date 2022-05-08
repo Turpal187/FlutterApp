@@ -1,5 +1,4 @@
 import 'package:admin/models/EmployeeModel.dart';
-import 'package:admin/services/google_sheets_api.dart';
 import 'package:admin/services/uuid_generator.dart';
 
 class TaskModel 
@@ -8,7 +7,6 @@ class TaskModel
   static List<Task> get demoTasks => TaskModel._demoTasks;
 
   static void addTask(Task newTask) => TaskModel._demoTasks.add(newTask);
-  static void saveTask(Task newTask) => GoogleSheetsApi.saveTask(newTask);
   static void deleteTask(Task delTask) => TaskModel._demoTasks.remove(delTask);
   static void editTask(Task task, String? statusValue) => TaskModel._demoTasks.singleWhere((element) => element == task).status = statusValue;
 
