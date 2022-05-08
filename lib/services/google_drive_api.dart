@@ -94,7 +94,8 @@ class GoogleDriveApi
     return await GoogleDriveApi._driveApi?.files.create(tocreate);
   }
 
-  static void list() => GoogleDriveApi._driveApi?.files.list().then((file) => file.files?.forEach((element) { print(element.name); }));
+  static void list() => GoogleDriveApi._driveApi?.files.list().then((file) => 
+    file.files?.forEach((element) => print(element.name) ));
   
   static Future<void> remove(String fileName) async
   {
@@ -105,4 +106,7 @@ class GoogleDriveApi
       GoogleDriveApi._driveApi?.files.delete(fileId);
     }
   }
+
+  static Future<void> removeAll() async =>
+    GoogleDriveApi._driveApi?.files.list().then((filelist) => filelist.files?.forEach((file) => GoogleDriveApi._driveApi?.files.delete(file.id!)));
 }
