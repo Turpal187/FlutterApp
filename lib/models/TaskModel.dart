@@ -1,7 +1,9 @@
 import 'package:admin/models/EmployeeModel.dart';
 import 'package:admin/services/google_sheets_api.dart';
+import 'package:admin/services/uuid_generator.dart';
 
-class TaskModel {
+class TaskModel 
+{
 
   static List<Task> get demoTasks => TaskModel._demoTasks;
 
@@ -13,12 +15,14 @@ class TaskModel {
   static List<Task> _demoTasks = [];
 }
 
-class Task {
+class Task 
+{
 
-  String? title, employee, date, time, status;
+  String? id, title, employee, date, time, status;
   int? duration;
 
-  Task({this.title, this.employee, this.date, this.time, this.duration, this.status});
+  Task({this.title, this.employee, this.date, this.time, this.duration, this.status}) { this.id = UuidGenerator.generate(); }
+  Task.fromSync({this.id, this.title, this.employee, this.date, this.time, this.duration, this.status});
 
   Employee get assigned => EmployeeModel.employee(this.employee!);
 }

@@ -1,6 +1,4 @@
-import 'package:admin/controllers/EmployeesController.dart';
 import 'package:admin/models/EmployeeModel.dart';
-import 'package:admin/services/google_auth_api.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
@@ -10,7 +8,6 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:intl/intl.dart';
 import '../../../controllers/TaskController.dart';
 import 'package:admin/services/google_drive_api.dart';
-import 'package:admin/services/google_sheets_api.dart';
 
 import '../../../constants.dart';
 
@@ -31,7 +28,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
   final Function _notifyParent;
 
   String _newTaskName = "";
-  String _newEmployee = EmployeeModel.demoEmployees[0].id;
+  String _newEmployee = EmployeeModel.demoEmployees.isEmpty ? '' : EmployeeModel.demoEmployees.first.id!;
   int _newTaskDuration = 0;
   PlatformFile? _chosenFile;
 

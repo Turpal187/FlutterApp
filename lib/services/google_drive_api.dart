@@ -108,5 +108,6 @@ class GoogleDriveApi
   }
 
   static Future<void> removeAll() async =>
-    GoogleDriveApi._driveApi?.files.list().then((filelist) => filelist.files?.forEach((file) => GoogleDriveApi._driveApi?.files.delete(file.id!)));
+    GoogleDriveApi._driveApi?.files.list().then((filelist) => filelist.files?.forEach((file) 
+      { print('Deleting file ${ file.name }'); GoogleDriveApi._driveApi?.files.delete(file.id!); }));
 }

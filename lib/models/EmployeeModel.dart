@@ -13,9 +13,10 @@ class EmployeeModel
 
 class Employee
 {
-  String id = UuidGenerator.generate();
-  String? name, surname, email;
-  Employee({this.name, this.surname, this.email});
+  String? id, name, surname, email;
+
+  Employee({this.name, this.surname, this.email}) { this.id = UuidGenerator.generate(); }
+  Employee.fromSync({this.id, this.name, this.surname, this.email});
 
   @override
   String toString() => '${ this.surname } ${ this.name }';
