@@ -9,4 +9,9 @@ class EmployeesController extends ControllerMVC
   EmployeesController._internal();
 
   List<Employee> get employees => EmployeeModel.demoEmployees;
+  void add(Employee employee)
+  {
+    EmployeeModel.add(employee);
+    EmployeeModel.save(employee);
+  }
 }

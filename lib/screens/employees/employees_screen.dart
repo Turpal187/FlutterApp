@@ -30,7 +30,7 @@ class _EmployeesScreenState extends State<EmployeesScreen>
                   flex: 5,
                   child: Column(
                     children: [
-                      MyEmployees(),
+                      MyEmployees(() => this.setState(() {})),
                       SizedBox(height: defaultPadding),
                       EmployeesTable(),
                     ],
