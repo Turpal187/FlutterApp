@@ -1,6 +1,7 @@
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:admin/screens/tasks/tasks_screen.dart';
 import 'package:admin/screens/employees/employees_screen.dart';
+import 'package:admin/screens/maps/maps_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -46,9 +47,13 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Documents",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
+            title: "Maps",
+            svgSrc: "assets/icons/location.svg",
+            press: () {
+
+              this._setScreen(new MapsScreen());
+
+            },
           ),
           DrawerListTile(
             title: "Store",
