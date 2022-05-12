@@ -1,50 +1,31 @@
-class RecentFile {
-  final String? icon, title, date, size;
+import 'package:admin/services/google_drive_api.dart';
+import 'package:googleapis/drive/v3.dart';
 
-  RecentFile({this.icon, this.title, this.date, this.size});
+class RecentFilesModel
+{
+  static List<RecentFile> _filesList = [];
+  static List<RecentFile> get files => RecentFilesModel._filesList;
+  static Future<void> fetch() async
+  {
+    print('Fetching application files for dashboard');
+    RecentFilesModel._filesList.clear();
+    GoogleDriveApi.list().then((FileList? files)
+    {
+      files?.files?.forEach((element)
+      {
+        print('Adding file ${ element.name } to RecentFiles tree');
+        RecentFilesModel._filesList.add(
+          RecentFile(icon: 'assets/icons/doc_file.svg', title: element.name, date: element.modifiedTime.toString(), size: element.size ?? ''));
+      });
+    });
+  }
 }
 
-List demoRecentFiles = [
-  RecentFile(
-    icon: "assets/icons/xd_file.svg",
-    title: "XD File",
-    date: "01-03-2021",
-    size: "3.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/Figma_file.svg",
-    title: "Figma File",
-    date: "27-02-2021",
-    size: "19.0mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/doc_file.svg",
-    title: "Document",
-    date: "23-02-2021",
-    size: "32.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/sound_file.svg",
-    title: "Sound File",
-    date: "21-02-2021",
-    size: "3.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/media_file.svg",
-    title: "Media File",
-    date: "23-02-2021",
-    size: "2.5gb",
-  ),
-  RecentFile(
-    icon: "assets/icons/pdf_file.svg",
-    title: "Sales PDF",
-    date: "25-02-2021",
-    size: "3.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/excle_file.svg",
-    title: "Excel File",
-    date: "25-02-2021",
-    size: "34.5mb",
-  ),
-];
+class RecentFile 
+{
+  final String? icon, title, date, size;
+  RecentFile({this.icon, this.title, this.date, this.size});
+
+  @override
+  String toString() => '$title, $date, $size';
+}

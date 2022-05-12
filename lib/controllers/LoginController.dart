@@ -3,6 +3,7 @@ import 'package:admin/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:admin/services/google_drive_api.dart';
 import 'package:admin/services/google_sheets_api.dart';
+import 'package:admin/models/RecentFile.dart';
 
 class LoginController extends ChangeNotifier
 {
@@ -22,6 +23,7 @@ class LoginController extends ChangeNotifier
     UserModel.write(user);
     await GoogleDriveApi.init();
     await GoogleSheetsApi.init();
+    await RecentFilesModel.fetch();
 
     return true;
   }

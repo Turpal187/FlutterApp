@@ -83,6 +83,8 @@ class GoogleDriveApi
       files.files?.firstWhereOrNull((element) => element.name == folder)?.id);
   }
 
+  static Future<Object?> get(String id) async => await GoogleDriveApi._driveApi?.files.get(id, $fields: '*');
+
   static Future<File?> _create(String path, String fname) async
   {
     final tocreate = new File(name: fname, mimeType: 'application/vnd.google-apps.folder');
@@ -94,8 +96,7 @@ class GoogleDriveApi
     return await GoogleDriveApi._driveApi?.files.create(tocreate);
   }
 
-  static void list() => GoogleDriveApi._driveApi?.files.list().then((file) => 
-    file.files?.forEach((element) => print(element.name) ));
+  static Future<FileList?> list() async => await GoogleDriveApi._driveApi?.files.list($fields: '*');
   
   static Future<void> remove(String fileName) async
   {

@@ -5,10 +5,10 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
 
-class RecentFiles extends StatelessWidget {
-  const RecentFiles({
-    Key? key,
-  }) : super(key: key);
+class RecentFiles extends StatelessWidget 
+{
+
+  RecentFiles({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class RecentFiles extends StatelessWidget {
                 ),
               ],
               rows: List.generate(
-                demoRecentFiles.length,
-                (index) => recentFileDataRow(demoRecentFiles[index]),
+                RecentFilesModel.files.length,
+                (index) => recentFileDataRow(RecentFilesModel.files[index]),
               ),
             ),
           ),
@@ -54,6 +54,7 @@ class RecentFiles extends StatelessWidget {
 }
 
 DataRow recentFileDataRow(RecentFile fileInfo) {
+  print(fileInfo.toString());
   return DataRow(
     cells: [
       DataCell(
