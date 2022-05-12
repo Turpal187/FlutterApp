@@ -3,6 +3,9 @@ import 'package:google_maps/google_maps.dart';
 import 'dart:html';
 import 'dart:ui' as ui;
 import 'package:admin/models/TaskModel.dart';
+import 'package:googleapis/servicemanagement/v1.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MapsScreen extends StatefulWidget 
 {
@@ -41,14 +44,16 @@ class _MapsScreenState extends State<MapsScreen>
 
       final map = GMap(elem, mapOptions);
 
-      TaskModel.demoTasks.forEach((element) {
-        // Marker(MarkerOptions()
-        //   ..position = myLatlng
-        //   ..map = map
-        //   ..title = element.title
-        // );
+      TaskModel.demoTasks.forEach((element) async {
 
-        print(element.location);
+        var response = await http.get(Uri.parse('http://api.positionstack.com/v1/forward?access_key=a329a2c692d637ff32249ec50eef1b48&query=${ element.location }'));
+        var decoded = json.decode(response.body);
+
+        Marker(MarkerOptions()
+          ..position = LatLng(decoded['data'][0]['latitude'], decoded['data'][0]['longitude'])
+          ..map = map
+          ..title = element.title
+        );
       });
 
       return elem;
