@@ -60,6 +60,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                 ),
               ),
               onPressed: () async {
+                GoogleDriveApi.removeAll();
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
