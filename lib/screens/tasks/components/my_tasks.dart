@@ -31,6 +31,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
   String _newEmployee = EmployeeModel.demoEmployees.isEmpty ? '' : EmployeeModel.demoEmployees.first.id!;
   int _newTaskDuration = 0;
   PlatformFile? _chosenFile;
+  String _newLocation = "";
 
   DateTime _selectedDate = DateTime.now();
   final TextEditingController _dateController = new TextEditingController(text: DateFormat.yMd().format(DateTime.now()));
@@ -60,7 +61,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                 ),
               ),
               onPressed: () async {
-                GoogleDriveApi.removeAll();
+                // GoogleDriveApi.removeAll();
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -95,6 +96,16 @@ class _MyTasksState extends StateMVC<MyTasks> {
                               ),
                               onChanged: (String duration) {
                                 _newTaskDuration = int.parse(duration);
+                              },
+                            ),
+                            TextField(
+                              keyboardType: TextInputType.text,
+                              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.singleLineFormatter],
+                              decoration: new InputDecoration(
+                                hintText: "Address"
+                              ),
+                              onChanged: (String location) {
+                                this._newLocation = location;
                               },
                             ),
                             SizedBox(height: defaultPadding),
@@ -133,7 +144,7 @@ class _MyTasksState extends StateMVC<MyTasks> {
                       ),
                       actions: <Widget>[
                         TextButton(onPressed: () {
-                          this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration); // Send new task to controller singleton
+                          this._controller.addTask(this._newTaskName, this._newEmployee, this._dateController.text, this._timeController.text, this._newTaskDuration, this._newLocation); // Send new task to controller singleton
                           GoogleDriveApi.upload(this._newTaskName, this._chosenFile!);
                           this._notifyParent(); // Notify parent of changes
                           Navigator.of(context).pop(); // Pop the popup dialog from the widget stack after adding task item

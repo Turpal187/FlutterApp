@@ -24,9 +24,9 @@ class TaskController extends ControllerMVC {
   }
   void editTask(Task task, String? statusValue) => TaskModel.editTask(task, statusValue);
 
-  void addTask(String name, String employee, String date, String time, int duration)
+  void addTask(String name, String employee, String date, String time, int duration, String location)
   {
-    final newTask = Task(title: name, employee: employee, date: date, time: time, duration: duration, status: "In Progress");
+    final newTask = Task(title: name, employee: employee, date: date, time: time, duration: duration, status: "In Progress", location: location);
     TaskModel.addTask(newTask); // Add task to DataBase
     GoogleSheetsApi.saveTask(newTask);
     DateTime startDate = DateTime.parse(date + ' ' + time + ':00');

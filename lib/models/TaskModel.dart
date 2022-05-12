@@ -17,11 +17,11 @@ class TaskModel
 class Task 
 {
 
-  String? id, title, employee, date, time, status;
+  String? id, title, employee, date, time, status, location;
   int? duration;
 
-  Task({this.title, this.employee, this.date, this.time, this.duration, this.status}) { this.id = UuidGenerator.generate(); }
-  Task.fromSync({this.id, this.title, this.employee, this.date, this.time, this.duration, this.status});
+  Task({this.title, this.employee, this.date, this.time, this.duration, this.status, this.location}) { this.id = UuidGenerator.generate(); }
+  Task.fromSync({this.id, this.title, this.employee, this.date, this.time, this.duration, this.status, this.location});
 
   Employee get assigned => EmployeeModel.employee(this.employee!);
 }

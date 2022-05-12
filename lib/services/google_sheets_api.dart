@@ -67,8 +67,8 @@ class GoogleSheetsApi
       GoogleSheetsApi._sheetId!, 'employees!A1:D1', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
 
     await GoogleSheetsApi._sheetsApi?.spreadsheets.values.append
-    (ValueRange(majorDimension: 'COLUMNS', range: 'tasks!A1:G1', values: [['id'], ['title'], ['employee'], ['date'], ['time'], ['duration'], ['status']]), 
-      GoogleSheetsApi._sheetId!, 'tasks!A1:G1', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
+    (ValueRange(majorDimension: 'COLUMNS', range: 'tasks!A1:H1', values: [['id'], ['title'], ['employee'], ['date'], ['time'], ['duration'], ['status'], ['location']]), 
+      GoogleSheetsApi._sheetId!, 'tasks!A1:H1', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
   }
 
   static Future<void> _syncData() async
@@ -83,12 +83,12 @@ class GoogleSheetsApi
     );
 
     print('Syncing tasks...');
-    GoogleSheetsApi._sheetsApi?.spreadsheets.values.get(GoogleSheetsApi._sheetId!, 'tasks!A2:G').then(
+    GoogleSheetsApi._sheetsApi?.spreadsheets.values.get(GoogleSheetsApi._sheetId!, 'tasks!A2:H').then(
       (values)
       {
         values.values?.forEach((element) { TaskModel.addTask(
           new Task.fromSync(id: element[0].toString(), title: element[1].toString(), employee: element[2].toString(), date: element[3].toString(), 
-                   time: element[4].toString(), duration: int.parse(element[5].toString()), status: element[6].toString())); });
+                   time: element[4].toString(), duration: int.parse(element[5].toString()), status: element[6].toString(), location: element[7].toString())); });
       }
     );
   }
@@ -105,8 +105,8 @@ class GoogleSheetsApi
   {
     print('Adding task to sheet ${ task.title }');
     GoogleSheetsApi._sheetsApi?.spreadsheets.values.append
-    (ValueRange(majorDimension: 'COLUMNS', range: 'tasks!A:G', values: [[task.id], [task.title], [task.employee], [task.date], [task.time], [task.duration], [task.status]]), 
-      GoogleSheetsApi._sheetId!, 'tasks!A:G', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
+    (ValueRange(majorDimension: 'COLUMNS', range: 'tasks!A:H', values: [[task.id], [task.title], [task.employee], [task.date], [task.time], [task.duration], [task.status], [task.location]]), 
+      GoogleSheetsApi._sheetId!, 'tasks!A:H', valueInputOption: 'USER_ENTERED', insertDataOption: 'OVERWRITE');
   }
 
   static void deleteTask(String taskId)

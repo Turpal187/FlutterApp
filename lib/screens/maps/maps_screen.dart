@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import '../components/header.dart';
 import 'package:google_maps/google_maps.dart';
-
 import 'dart:html';
 import 'dart:ui' as ui;
-
-import '../../constants.dart';
+import 'package:admin/models/TaskModel.dart';
 
 class MapsScreen extends StatefulWidget 
 {
@@ -44,11 +41,15 @@ class _MapsScreenState extends State<MapsScreen>
 
       final map = GMap(elem, mapOptions);
 
-      Marker(MarkerOptions()
-        ..position = myLatlng
-        ..map = map
-        ..title = 'Hello World!'
-      );
+      TaskModel.demoTasks.forEach((element) {
+        // Marker(MarkerOptions()
+        //   ..position = myLatlng
+        //   ..map = map
+        //   ..title = element.title
+        // );
+
+        print(element.location);
+      });
 
       return elem;
     });
